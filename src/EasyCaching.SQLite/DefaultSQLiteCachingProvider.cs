@@ -85,7 +85,7 @@
         /// </summary>
         /// <param name="dbProvider"></param>
         private void InitDb(ISQLiteDatabaseProvider dbProvider)
-        {            
+        {
             var conn = dbProvider.GetConnection();
 
             if (conn.State == System.Data.ConnectionState.Closed)
@@ -93,7 +93,7 @@
                 conn.Open();
             }
 
-            conn.Execute(ConstSQL.CREATESQL);            
+            conn.Execute(ConstSQL.CREATESQL);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@
                 if (_options.EnableLogging)
                     _logger?.LogInformation($"Cache Hit : cachekey = {cacheKey}");
 
-                return string.IsNullOrWhiteSpace(dbResult) 
+                return string.IsNullOrWhiteSpace(dbResult)
                     ? CacheValue<T>.Null
                     : new CacheValue<T>(Newtonsoft.Json.JsonConvert.DeserializeObject<T>(dbResult), true);
             }
@@ -221,7 +221,7 @@
                 expiration = expiration.Ticks / 10000000
             });
 
-        }          
+        }
 
         /// <summary>
         /// Removes cached item by cachekey's prefix.
@@ -247,10 +247,10 @@
 
             if (_options.EnableLogging)
                 _logger?.LogInformation($"RemoveByPattern : pattern = {pattern}");
-            
+
             _cache.Execute(ConstSQL.REMOVEBYLIKESQL, new { cachekey = pattern.Replace('*', '%'), name = _name });
         }
-        
+
         /// <summary>
         /// Sets all.
         /// </summary>
@@ -276,7 +276,7 @@
             }
 
             tran.Commit();
-        }   
+        }
 
         /// <summary>
         /// Gets all.
@@ -299,7 +299,20 @@
 
         public override IEnumerable<string> BaseGetAllKeysByPrefix(string prefix)
         {
-            throw new NotSupportedException();
+            ArgumentCheck.NotNull(prefix, nameof(prefix));
+
+            var list = _cache.Query(ConstSQL.GETALLKEYSSQL, new
+            {
+                cachekey = string.Concat(prefix, "%"),
+                name = _name
+            }).ToList();
+
+            foreach (var item in list)
+            {
+                if (!string.IsNullOrWhiteSpace(item.cachekey))
+                    yield return item.cachekey;
+            }
+
         }
 
         /// <summary>
@@ -339,7 +352,7 @@
 
             return GetDict<T>(list);
         }
-    
+
         /// <summary>
         /// Removes all.
         /// </summary>

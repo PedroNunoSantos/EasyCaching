@@ -55,7 +55,14 @@
         public const string GETALLSQL = @"SELECT [cachekey],[cachevalue]
                     FROM [easycaching]
                     WHERE [cachekey] IN @cachekey AND [name]=@name AND [expiration] > strftime('%s','now')";
-        
+
+        /// <summary>
+        /// The getallkeyssql.
+        /// </summary>
+        public const string GETALLKEYSSQL = @"SELECT [cachekey]
+                    FROM [easycaching]
+                    WHERE [cachekey] like @cachekey AND [name]=@name AND [expiration] > strftime('%s','now')";
+
         /// <summary>
         /// The getbyprefixsql.
         /// </summary>
