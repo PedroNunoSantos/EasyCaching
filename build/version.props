@@ -3,7 +3,7 @@
 		<EasyCachingCorePackageVersion>1.9.0</EasyCachingCorePackageVersion>
 		<EasyCachingMemcachedPackageVersion>1.9.0</EasyCachingMemcachedPackageVersion>
 		<EasyCachingRedisPackageVersion>1.9.0</EasyCachingRedisPackageVersion>
-		<EasyCachingSQLitePackageVersion>1.9.0</EasyCachingSQLitePackageVersion>
+		<EasyCachingSQLitePackageVersion>1.9.1</EasyCachingSQLitePackageVersion>
 		<EasyCachingInMemoryPackageVersion>1.9.0</EasyCachingInMemoryPackageVersion>
 		<EasyCachingHybridPackageVersion>1.9.0</EasyCachingHybridPackageVersion>
 		<EasyCachingAspectCorePackageVersion>1.9.0</EasyCachingAspectCorePackageVersion>
